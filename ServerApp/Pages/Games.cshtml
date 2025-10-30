@@ -1,0 +1,55 @@
+﻿@page
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+@model ServerApp.Pages.GamesModel
+@{
+    ViewData["Title"] = "My Games";
+}
+
+<div class="max-w-5xl mx-auto mt-12 mb-16 px-4">
+    <h2 class="text-3xl font-bold text-indigo-700 mb-6">My Games</h2>
+
+    <!-- Delete Specific Game Form -->
+    <form method="post" class="mb-8 flex items-center gap-4">
+        <div>
+            <label asp-for="GameId" class="block text-gray-600">Enter Game ID to delete:</label>
+            <input asp-for="GameId" type="number" class="mt-1 px-3 py-2 border rounded w-32" />
+            <span asp-validation-for="GameId" class="text-red-500 block"></span>
+        </div>
+        <button type="submit" asp-page-handler="Delete"
+                class="mt-6 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                onclick="return confirm('Are you sure you want to delete game ' + document.querySelector('[asp-for=GameId]').value + '?');">
+            Delete Game
+        </button>
+    </form>
+
+    <!-- All Games Table -->
+    <div class="overflow-x-auto rounded-2xl shadow">
+        <table class="min-w-full bg-white">
+            <thead>
+                <tr class="bg-indigo-100 text-indigo-800 text-left">
+                    <th class="py-3 px-5 font-semibold">Game ID</th>
+                    <th class="py-3 px-5 font-semibold">Start Time</th>
+                    <th class="py-3 px-5 font-semibold">Duration</th>
+                    <th class="py-3 px-5 font-semibold">Winner</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var g in Model.Games)
+                {
+                    <tr class="even:bg-indigo-50 hover:bg-indigo-100">
+                        <td class="py-2 px-5">@g.Id</td>
+                        <td class="py-2 px-5">
+                            @(g.StartTime.AddHours(3).ToString("dd/MM/yyyy HH:mm:ss"))
+                        </td>
+                        <td class="py-2 px-5">
+                            @(g.Duration.ToString(@"mm\:ss\.fff"))
+                        </td>
+                        <td class="py-2 px-5">@g.Winner</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+﻿@page
+@model ServerApp.Pages.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="max-w-md mx-auto bg-white/90 rounded-2xl shadow-xl mt-16 p-8">
+    <h2 class="text-3xl font-bold text-indigo-700 mb-6 text-center">Login</h2>
+
+    <form method="post" class="space-y-6">
+        <div>
+            <label asp-for="PlayerId" class="block mb-2 text-sm font-medium text-gray-700">Player ID</label>
+            <input asp-for="PlayerId" type="number" min="1" max="1000"
+                   class="block w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-lg shadow-sm focus:ring-2 focus:ring-indigo-400 focus:border-indigo-500 outline-none transition"
+                   placeholder="Enter your player ID" />
+            <span asp-validation-for="PlayerId" class="text-xs text-red-600 mt-1 block"></span>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div class="bg-red-100 border border-red-300 text-red-700 px-4 py-3 rounded-xl text-center text-sm font-semibold">
+                @Model.ErrorMessage
+            </div>
+        }
+
+        <button type="submit"
+                class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-semibold shadow-md transition">
+            Login
+        </button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

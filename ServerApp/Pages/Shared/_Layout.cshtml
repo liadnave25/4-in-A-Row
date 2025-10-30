@@ -1,0 +1,126 @@
+﻿@* Modern glassy layout with auth-aware navigation *@
+<!DOCTYPE html>
+<html lang="en" x-data="{ mobileMenuOpen: false }">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#6366F1" />
+    <title>@ViewData["Title"] - ConnectFour</title>
+
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js for menu -->
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .glass {
+            backdrop-filter: blur(8px) saturate(150%);
+            background-color: rgba(255,255,255,0.72);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-tr from-indigo-50 to-violet-100 min-h-screen antialiased text-gray-900">
+
+    <!-- Sticky Glassy Header -->
+    <header class="sticky top-0 z-30 shadow-sm">
+        <nav class="glass w-full">
+            <div class="max-w-7xl mx-auto px-4 sm:px-8 flex justify-between items-center h-16">
+                <span class="text-2xl font-extrabold text-indigo-600 tracking-tight select-none">ConnectFour</span>
+                <!-- Desktop Nav -->
+                <div class="hidden sm:flex space-x-4">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-page="/Welcome"
+                           asp-route-id="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value"
+                           class="rounded-xl px-4 py-2 font-medium hover:bg-indigo-100 text-indigo-700 transition">Play</a>
+                        <a asp-page="/ShowPlayersBy"
+                           class="rounded-xl px-4 py-2 font-medium hover:bg-indigo-100 text-indigo-700 transition">Players</a>
+                        <a asp-page="/EditPlayer"
+                           asp-route-id="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value"
+                           class="rounded-xl px-4 py-2 font-medium hover:bg-indigo-100 text-indigo-700 transition">Edit Profile</a>
+                        <a asp-page="/Games"
+                           class="rounded-xl px-4 py-2 font-medium hover:bg-indigo-100 text-indigo-700 transition">My Games</a>
+                        <a asp-page="/Logout"
+                           class="rounded-xl px-4 py-2 font-medium bg-red-500 hover:bg-red-600 text-white transition">Logout</a>
+                    }
+                    else
+                    {
+                        <a asp-page="/Index" class="rounded-xl px-4 py-2 font-medium hover:bg-indigo-100 text-indigo-700 transition">Home</a>
+                        <a asp-page="/Register" class="rounded-xl px-4 py-2 font-medium hover:bg-indigo-100 text-indigo-700 transition">Register</a>
+                        <a asp-page="/Login" class="rounded-xl px-4 py-2 font-medium hover:bg-indigo-100 text-indigo-700 transition">Login</a>
+                    }
+                </div>
+                <!-- Mobile menu button -->
+                <button x-on:click="mobileMenuOpen = !mobileMenuOpen"
+                        class="sm:hidden inline-flex items-center justify-center p-2 rounded-xl text-indigo-700 hover:bg-indigo-100 focus:outline-none transition">
+                    <svg x-show="!mobileMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <svg x-show="mobileMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <!-- Mobile Nav -->
+            <div x-show="mobileMenuOpen" x-transition class="sm:hidden px-4 pt-2 pb-4 space-y-2">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a asp-page="/Welcome"
+                       asp-route-id="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value"
+                       class="block rounded-xl px-4 py-2 text-indigo-700 font-semibold hover:bg-indigo-100 transition">Play</a>
+                    <a asp-page="/ShowPlayersBy"
+                       class="block rounded-xl px-4 py-2 text-indigo-700 font-semibold hover:bg-indigo-100 transition">Players</a>
+                    <a asp-page="/EditPlayer"
+                       asp-route-id="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value"
+                       class="block rounded-xl px-4 py-2 text-indigo-700 font-semibold hover:bg-indigo-100 transition">Edit Profile</a>
+                    <a asp-page="/Games"
+                       class="block rounded-xl px-4 py-2 text-indigo-700 font-semibold hover:bg-indigo-100 transition">My Games</a>
+                    <a asp-page="/Logout"
+                       class="block rounded-xl px-4 py-2 font-medium bg-red-500 hover:bg-red-600 text-white transition">Logout</a>
+                }
+                else
+                {
+                    <a asp-page="/Index" class="block rounded-xl px-4 py-2 text-indigo-700 font-semibold hover:bg-indigo-100 transition">Home</a>
+                    <a asp-page="/Register" class="block rounded-xl px-4 py-2 text-indigo-700 font-semibold hover:bg-indigo-100 transition">Register</a>
+                    <a asp-page="/Login" class="block rounded-xl px-4 py-2 text-indigo-700 font-semibold hover:bg-indigo-100 transition">Login</a>
+                }
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto mt-10 mb-12 px-4 sm:px-6">
+        @RenderBody()
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-4xl mx-auto mb-8 px-4">
+        <div class="rounded-2xl bg-white/80 shadow text-center text-sm text-gray-500 py-6 select-none flex flex-col items-center gap-2">
+            <div class="flex flex-row gap-7 mb-1">
+                <!-- Offir -->
+                <div class="flex items-center gap-2">
+                    <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-indigo-100 text-xl border border-indigo-300">🕹️</span>
+                    <span class="font-semibold text-indigo-700">Offir Tura</span>
+                </div>
+                <!-- Liad -->
+                <div class="flex items-center gap-2">
+                    <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-purple-100 text-xl border border-purple-300">🎮</span>
+                    <span class="font-semibold text-purple-700">Liad Nave</span>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 text-xs mt-1">
+                <span class="text-gray-400">Computer science students at Afeka College · &copy; 2025 ConnectFour</span>
+                <a asp-page="/About"
+                   class="ml-2 inline-block px-3 py-1 rounded-full text-indigo-600 hover:bg-indigo-100 font-semibold transition">About</a>
+            </div>
+        </div>
+    </footer>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

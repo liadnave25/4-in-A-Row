@@ -1,0 +1,53 @@
+﻿@page
+@model AboutModel
+@{
+    ViewData["Title"] = "About";
+}
+
+<div class="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-100 to-purple-200">
+    <div class="bg-white/60 backdrop-blur-lg rounded-3xl shadow-2xl p-8 max-w-lg w-full border border-indigo-200">
+        <h1 class="text-4xl font-bold text-indigo-700 text-center mb-8 tracking-wide drop-shadow">About Us</h1>
+
+        <div class="flex flex-col gap-8">
+            <!-- Offir -->
+            <div class="flex items-center gap-4 p-4 bg-indigo-50 rounded-xl shadow-inner hover:shadow-md transition">
+                <div class="w-16 h-16 flex items-center justify-center rounded-full bg-indigo-100 text-3xl border-2 border-indigo-300 shadow">
+                    🕹️
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-indigo-700">Offir Tura</h3>
+                    <p class="text-gray-700">
+                        Computer science student at Afeka College<br />
+                        <a href="https://github.com/Tura2"
+                           target="_blank" rel="noopener"
+                           class="inline-block mt-1 text-indigo-500 hover:text-indigo-700 font-semibold underline transition">
+                            Github
+                        </a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Liad -->
+            <div class="flex items-center gap-4 p-4 bg-purple-50 rounded-xl shadow-inner hover:shadow-md transition">
+                <div class="w-16 h-16 flex items-center justify-center rounded-full bg-purple-100 text-3xl border-2 border-purple-300 shadow">
+                    🎮
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-purple-700">Liad Nave</h3>
+                    <p class="text-gray-700">
+                        Computer science student at Afeka College<br />
+                        <a href="https://github.com/liadnave25"
+                           target="_blank" rel="noopener"
+                           class="inline-block mt-1 text-purple-500 hover:text-purple-700 font-semibold underline transition">
+                            Github
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-10 text-center text-gray-500 text-sm">
+            &copy; 2025 Offir &amp; Liad &middot; Connect Four Project
+        </div>
+    </div>
+</div>
